@@ -1444,7 +1444,10 @@ iterRunes:
 				} else {
 					p.stateTime = timeWsAlpha
 				}
-
+			case timeWsAMPM:
+				if r == ' ' {
+					p.stateTime = timeWs
+				}
 			case timeWsOffset:
 				// timeWsOffset
 				//   15:04:05 -0700
