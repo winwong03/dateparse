@@ -95,6 +95,8 @@ const (
 	dateWeekdayAbbrevComma
 	dateDigitDashDigit
 	dateDigitDashDigitDash
+	dateYearWs
+	dateYearWsMonthWs
 )
 const (
 	// Time state
@@ -390,7 +392,13 @@ iterRunes:
 				// 02 Jan 2018 23:59:34
 				// 12 Feb 2006, 19:17
 				// 12 Feb 2006, 19:17:22
-				if i == 6 {
+				// 2013 Jan 06 15:04:05
+				if i == 4 {
+					p.yearlen = i
+					p.moi = i + 1
+					p.setYear()
+					p.stateDate = dateYearWs
+				} else if i == 6 {
 					p.stateDate = dateDigitSt
 				} else {
 					p.stateDate = dateDigitWs
@@ -746,6 +754,30 @@ iterRunes:
 		case dateDigitWsMolong:
 			// 18 January 2018
 			// 8 January 2018
+
+		case dateYearWs:
+			// 2013 Jan 06 15:04:05
+			if r == ' ' {
+				p.molen = i - p.moi
+				p.set(p.moi, "Jan")
+				p.dayi = i + 1
+				p.stateDate = dateYearWsMonthWs
+			}
+		case dateYearWsMonthWs:
+			// 2013 Jan 06 15:04:05
+			switch r {
+			case ',':
+				p.daylen = i - p.dayi
+				p.setDay()
+				i++
+				p.stateTime = timeStart
+				break iterRunes
+			case ' ':
+				p.daylen = i - p.dayi
+				p.setDay()
+				p.stateTime = timeStart
+				break iterRunes
+			}
 
 		case dateDigitChineseYear:
 			// dateDigitChineseYear
@@ -2017,6 +2049,8 @@ iterRunes:
 		// Mon, 02 Jan 2006 15:04:05 MST
 		return p, nil
 
+	case dateYearWsMonthWs:
+		return p, nil
 	}
 
 	return nil, unknownErr(datestr)
