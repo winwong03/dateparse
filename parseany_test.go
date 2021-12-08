@@ -427,6 +427,7 @@ var testInputs = []dateTest{
 	{in: "1384216367111222", out: "2013-11-12 00:32:47.111222 +0000 UTC"},
 	{in: "1384216367111222333", out: "2013-11-12 00:32:47.111222333 +0000 UTC"},
 	{in: "Mon 30 Sep 2018 09:09:09 PM PST", out: "2018-09-30 21:09:09 +0000 UTC"},
+	{in: "1335986983.581", out: "2012-05-02 19:29:43.581 +0000 UTC"},
 }
 
 func TestParse(t *testing.T) {
@@ -529,6 +530,7 @@ var testParseErrors = []dateTest{
 func TestParseErrors(t *testing.T) {
 	for _, th := range testParseErrors {
 		v, err := ParseAny(th.in)
+		fmt.Println("err:", err)
 		assert.NotEqual(t, nil, err, "%v for %v", v, th.in)
 
 		v, err = ParseAny(th.in, RetryAmbiguousDateWithSwap(true))

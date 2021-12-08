@@ -1949,7 +1949,24 @@ iterRunes:
 		return p, nil
 
 	case dateDigitDot:
-		if len(datestr) == len("yyyyMMddhhmmss.SSS") { // 18
+		// unix seconds.milliseconds
+		if len(datestr) == len("1335986983.581") { // 14
+			unixStr := strings.Split(datestr, ".")
+			if seconds, err := strconv.ParseInt(unixStr[0], 10, 64); err == nil {
+				if milliseconds, err := strconv.ParseInt(unixStr[1], 10, 64); err == nil {
+					t := time.Unix(seconds, milliseconds*1000*1000)
+					if !t.IsZero() {
+						if loc == nil {
+							p.t = &t
+							return p, nil
+						}
+						t = t.In(loc)
+						p.t = &t
+						return p, nil
+					}
+				}
+			}
+		} else if len(datestr) == len("yyyyMMddhhmmss.SSS") { // 18
 			p.format = []byte("20060102150405.000")
 			return p, nil
 		} else {

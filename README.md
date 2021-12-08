@@ -21,7 +21,7 @@ t, err := dateparse.ParseAny("3/1/2014")
 
 // Parse Strict, error on ambigous mm/dd vs dd/mm dates
 t, err := dateparse.ParseStrict("3/1/2014")
-> returns error 
+> returns error
 
 // Return a string that represents the layout to parse the given date-time.
 layout, err := dateparse.ParseFormat("May 8, 2009 5:57:51 PM")
@@ -173,6 +173,7 @@ var examples = []string{
 	"1384216367189",
 	"1384216367111222",
 	"1384216367111222333",
+    "1335986983.581",
 }
 
 var (
@@ -317,6 +318,7 @@ func main() {
 | 1384216367189                                         | 2013-11-12 00:32:47.189 +0000 UTC       |
 | 1384216367111222                                      | 2013-11-12 00:32:47.111222 +0000 UTC    |
 | 1384216367111222333                                   | 2013-11-12 00:32:47.111222333 +0000 UTC |
+| 1335986983.581                                        | 2012-05-02 19:29:43.581 +0000 UTC       |
 +-------------------------------------------------------+-----------------------------------------+
 */
 
