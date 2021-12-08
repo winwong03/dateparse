@@ -58,42 +58,42 @@ const (
 	dateDigitSt
 	dateYearDash
 	dateYearDashAlphaDash
-	dateYearDashDash
-	dateYearDashDashWs // 5
+	dateYearDashDash // 5
+	dateYearDashDashWs
 	dateYearDashDashT
 	dateYearDashDashOffset
 	dateDigitDash
-	dateDigitDashAlpha
-	dateDigitDashAlphaDash // 10
+	dateDigitDashAlpha // 10
+	dateDigitDashAlphaDash
 	dateDigitDot
 	dateDigitDotDot
 	dateDigitSlash
-	dateDigitYearSlash
-	dateDigitSlashAlpha // 15
+	dateDigitYearSlash // 15
+	dateDigitSlashAlpha
 	dateDigitColon
 	dateDigitChineseYear
 	dateDigitChineseYearWs
-	dateDigitWs
-	dateDigitWsMoYear // 20
+	dateDigitWs // 20
+	dateDigitWsMoYear
 	dateDigitWsMolong
 	dateAlpha
 	dateAlphaWs
-	dateAlphaWsDigit
-	dateAlphaWsDigitMore // 25
+	dateAlphaWsDigit // 25
+	dateAlphaWsDigitMore
 	dateAlphaWsDigitMoreWs
 	dateAlphaWsDigitMoreWsYear
 	dateAlphaWsMonth
-	dateAlphaWsDigitYearmaybe
+	dateAlphaWsDigitYearmaybe // 30
 	dateAlphaWsMonthMore
 	dateAlphaWsMonthSuffix
 	dateAlphaWsMore
 	dateAlphaWsAtTime
-	dateAlphaWsAlpha
-	dateAlphaWsAlphaYearmaybe // 35
+	dateAlphaWsAlpha // 35
+	dateAlphaWsAlphaYearmaybe
 	dateAlphaPeriodWsDigit
 	dateWeekdayComma
 	dateWeekdayAbbrevComma
-	dateDigitDashDigit
+	dateDigitDashDigit //40
 	dateDigitDashDigitDash
 	dateYearWs
 	dateYearWsMonthWs
@@ -275,6 +275,7 @@ iterRunes:
 			i += (bytesConsumed - 1)
 		}
 
+		fmt.Println("stateDate:", p.stateDate)
 		// gou.Debugf("i=%d r=%s state=%d   %s", i, string(r), p.stateDate, datestr)
 		switch p.stateDate {
 		case dateStart:
@@ -1921,6 +1922,7 @@ iterRunes:
 
 		return p, nil
 	case dateDigitDashDigitDash:
+		fmt.Println("date digit dash digit")
 		// 13-02-03   ambiguous
 		// 28-02-03   ambiguous
 		// 29-06-2016

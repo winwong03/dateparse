@@ -522,7 +522,6 @@ var testParseErrors = []dateTest{
 	{in: "oct.-7-1970", err: true},
 	{in: "septe. 7, 1970", err: true},
 	{in: "SeptemberRR 7th, 1970", err: true},
-	{in: "29-06-2016", err: true},
 	// this is just testing the empty space up front
 	{in: " 2018-01-02 17:08:09 -07:00", err: true},
 }
