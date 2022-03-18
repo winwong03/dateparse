@@ -269,13 +269,13 @@ func parseTime(datestr string, loc *time.Location, opts ...ParserOption) (p *par
 	// we figure it out and then attempt a parse
 iterRunes:
 	for ; i < len(datestr); i++ {
-		//r := rune(datestr[i])
+		r := rune(datestr[i])
 		r, bytesConsumed := utf8.DecodeRuneInString(datestr[i:])
 		if bytesConsumed > 1 {
 			i += (bytesConsumed - 1)
 		}
 
-		fmt.Println("stateDate:", p.stateDate)
+		//fmt.Println("stateDate:", p.stateDate)
 		// gou.Debugf("i=%d r=%s state=%d   %s", i, string(r), p.stateDate, datestr)
 		switch p.stateDate {
 		case dateStart:
@@ -1480,6 +1480,8 @@ iterRunes:
 					p.stateTime = timeWsAlpha
 				}
 			case timeWsAMPM:
+				fmt.Println("timeWsAMPM")
+				fmt.Println("r:", r)
 				if r == ' ' {
 					p.stateTime = timeWs
 				}

@@ -81,6 +81,8 @@ func main() {
 type parser func(datestr string, loc *time.Location, utc bool) string
 
 func parseLocal(datestr string, loc *time.Location, utc bool) string {
+	fmt.Println("running parseLocal")
+
 	time.Local = loc
 	t, err := dateparse.ParseLocal(datestr)
 	if err != nil {
@@ -93,28 +95,35 @@ func parseLocal(datestr string, loc *time.Location, utc bool) string {
 }
 
 func parseIn(datestr string, loc *time.Location, utc bool) string {
+	fmt.Println("running parseIn")
+
 	t, err := dateparse.ParseIn(datestr, loc)
 	if err != nil {
 		return err.Error()
 	}
 	if utc {
+		fmt.Println("is in utc")
 		return t.In(time.UTC).String()
 	}
 	return t.String()
 }
 
 func parseAny(datestr string, loc *time.Location, utc bool) string {
+	fmt.Println("running parseAny")
 	t, err := dateparse.ParseAny(datestr)
 	if err != nil {
 		return err.Error()
 	}
 	if utc {
+		fmt.Println("is in UTC")
 		return fmt.Sprintf("%s day=%d", t.In(time.UTC), t.In(time.UTC).Weekday())
 	}
 	return t.String()
 }
 
 func parseStrict(datestr string, loc *time.Location, utc bool) string {
+	fmt.Println("running parseStrict")
+
 	t, err := dateparse.ParseStrict(datestr)
 	if err != nil {
 		return err.Error()
