@@ -1,4 +1,4 @@
-module github.com/winwong03/dateparse
+module github.com/araddon/dateparse
 
 go 1.12
 

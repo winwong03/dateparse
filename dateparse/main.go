@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/araddon/dateparse"
 	"github.com/scylladb/termtables"
-	"github.com/winwong03/dateparse"
 )
 
 var (
