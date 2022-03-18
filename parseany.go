@@ -152,6 +152,7 @@ func ParseAny(datestr string, opts ...ParserOption) (time.Time, error) {
 	if err != nil {
 		return time.Time{}, err
 	}
+	fmt.Println("format of dateparse time:", p)
 	return p.parse()
 }
 
