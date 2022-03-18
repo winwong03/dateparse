@@ -2311,10 +2311,14 @@ func (p *parser) parse() (time.Time, error) {
 
 	if p.loc == nil {
 		// gou.Debugf("parse layout=%q input=%q   \ntx, err := time.Parse(%q, %q)", string(p.format), p.datestr, string(p.format), p.datestr)
-		return time.Parse(string(p.format), p.datestr)
+		t, err := time.Parse(string(p.format), p.datestr)
+		fmt.Println("parsed format is:", t, "error:", err)
+		return t, err
 	}
 	//gou.Debugf("parse layout=%q input=%q   \ntx, err := time.ParseInLocation(%q, %q, %v)", string(p.format), p.datestr, string(p.format), p.datestr, p.loc)
-	return time.ParseInLocation(string(p.format), p.datestr, p.loc)
+	t, err := time.ParseInLocation(string(p.format), p.datestr, p.loc)
+	fmt.Println("parsed format with location:", t, "error:", err)
+	return t, err
 }
 func isDay(alpha string) bool {
 	for _, day := range days {
