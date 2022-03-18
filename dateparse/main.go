@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/scylladb/termtables"
-	"github.com/araddon/dateparse"
+	"github.com/winwong03/dateparse"
 )
 
 var (
