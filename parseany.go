@@ -2517,13 +2517,13 @@ func (p *parser) parse() (time.Time, error) {
 		p.datestr = p.datestr[p.skip:]
 	}
 
-	fmt.Println("parser.parse p.format: `%s`\n", string(p.format))
-	fmt.Println("parser.parse p.datestr: `%s`\n", p.datestr)
+	fmt.Printf("parser.parse p.format:`%s`\n", string(p.format))
+	fmt.Printf("parser.parse p.datestr:`%s`\n", p.datestr)
 
 	if p.loc == nil {
 		// gou.Debugf("parse layout=%q input=%q   \ntx, err := time.Parse(%q, %q)", string(p.format), p.datestr, string(p.format), p.datestr)
 		t, err := time.Parse(string(p.format), p.datestr)
-		fmt.Printf("parsed format is: `%s`\n", t)
+		fmt.Printf("parsed format is:`%s`\n", t)
 		return t, err
 	}
 	//gou.Debugf("parse layout=%q input=%q   \ntx, err := time.ParseInLocation(%q, %q, %v)", string(p.format), p.datestr, string(p.format), p.datestr, p.loc)
