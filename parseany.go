@@ -276,10 +276,10 @@ iterRunes:
 			i += (bytesConsumed - 1)
 		}
 
-		//fmt.Println("stateDate:", p.stateDate)
 		// gou.Debugf("i=%d r=%s state=%d   %s", i, string(r), p.stateDate, datestr)
 		switch p.stateDate {
 		case dateStart:
+			fmt.Println("dateStart")
 			if unicode.IsDigit(r) {
 				p.stateDate = dateDigit
 			} else if unicode.IsLetter(r) {
@@ -288,6 +288,7 @@ iterRunes:
 				return nil, unknownErr(datestr)
 			}
 		case dateDigit:
+			fmt.Println("dateDigit")
 
 			switch r {
 			case '-', '\u2212':
@@ -425,6 +426,8 @@ iterRunes:
 			p.stateTime = timeStart
 			break iterRunes
 		case dateYearDash:
+			fmt.Println("dateYearDash")
+
 			// dateYearDashDashT
 			//  2006-01-02T15:04:05Z07:00
 			//  2020-08-17T17:00:00:000+0100
@@ -445,6 +448,8 @@ iterRunes:
 			}
 
 		case dateYearDashDash:
+			fmt.Println("dateYearDashDash")
+
 			// dateYearDashDashT
 			//  2006-01-02T15:04:05Z07:00
 			// dateYearDashDashWs
@@ -472,11 +477,15 @@ iterRunes:
 			}
 
 		case dateYearDashDashT:
+			fmt.Println("dateYearDashDashT")
+
 			// dateYearDashDashT
 			//  2006-01-02T15:04:05Z07:00
 			//  2020-08-17T17:00:00:000+0100
 
 		case dateYearDashDashOffset:
+			fmt.Println("dateYearDashDashOffset")
+
 			//  2020-07-20+00:00
 			switch r {
 			case ':':
@@ -486,6 +495,8 @@ iterRunes:
 			}
 
 		case dateYearDashAlphaDash:
+			fmt.Println("dateYearDashAlphaDash")
+
 			// 2013-Feb-03
 			switch r {
 			case '-':
@@ -494,6 +505,8 @@ iterRunes:
 				p.dayi = i + 1
 			}
 		case dateDigitDash:
+			fmt.Println("dateDigitDash")
+
 			// 13-Feb-03
 			// 29-Jun-2016
 			if unicode.IsLetter(r) {
@@ -506,6 +519,8 @@ iterRunes:
 				return nil, unknownErr(datestr)
 			}
 		case dateDigitDashAlpha:
+			fmt.Println("dateDigitDashAlpha")
+
 			// 13-Feb-03
 			// 28-Feb-03
 			// 29-Jun-2016
@@ -517,6 +532,8 @@ iterRunes:
 				p.stateDate = dateDigitDashAlphaDash
 			}
 		case dateDigitDashDigit:
+			fmt.Println("dateDigitDashDigit")
+
 			// 29-06-2026
 			switch r {
 			case '-':
@@ -526,6 +543,8 @@ iterRunes:
 				p.stateDate = dateDigitDashDigitDash
 			}
 		case dateDigitDashAlphaDash:
+			fmt.Println("dateDigitDashAlphaDash")
+
 			// 13-Feb-03   ambiguous
 			// 28-Feb-03   ambiguous
 			// 29-Jun-2016  dd-month(alpha)-yyyy
@@ -558,6 +577,8 @@ iterRunes:
 				break iterRunes
 			}
 		case dateDigitDashDigitDash:
+			fmt.Println("dateDigitDashDigitDash")
+
 			// 29-06-2026
 			switch r {
 			case ' ':
@@ -589,6 +610,8 @@ iterRunes:
 			}
 
 		case dateDigitYearSlash:
+			fmt.Println("dateDigitYearSlash")
+
 			// 2014/07/10 06:55:38.156283
 			// I honestly don't know if this format ever shows up as yyyy/
 
@@ -609,6 +632,8 @@ iterRunes:
 			}
 
 		case dateDigitSlashAlpha:
+			fmt.Println("dateDigitSlashAlpha")
+
 			// 06/May/2008
 
 			switch r {
@@ -631,6 +656,7 @@ iterRunes:
 			}
 
 		case dateDigitSlash:
+			fmt.Println("dateDigitSlash")
 			// 03/19/2012 10:11:59
 			// 04/2/2014 03:00:37
 			// 3/1/2012 10:11:59
@@ -668,6 +694,7 @@ iterRunes:
 			}
 
 		case dateDigitColon:
+			fmt.Println("dateDigitColon")
 			// 2014:07:10 06:55:38.156283
 			// 03:19:2012 10:11:59
 			// 04:2:2014 03:00:37
@@ -707,6 +734,7 @@ iterRunes:
 			}
 
 		case dateDigitWs:
+			fmt.Println("dateDigitWs")
 			// 18 January 2018
 			// 8 January 2018
 			// 8 jan 2018
@@ -739,6 +767,7 @@ iterRunes:
 			}
 
 		case dateDigitWsMoYear:
+			fmt.Println("dateDigitWsMoYear")
 			// 8 jan 2018
 			// 02 Jan 2018 23:59
 			// 02 Jan 2018 23:59:34
@@ -756,10 +785,14 @@ iterRunes:
 				break iterRunes
 			}
 		case dateDigitWsMolong:
+			fmt.Println("dateDigitWsMoLong")
+
 			// 18 January 2018
 			// 8 January 2018
 
 		case dateYearWs:
+			fmt.Println("dateYearWs")
+
 			// 2013 Jan 06 15:04:05
 			if r == ' ' {
 				p.molen = i - p.moi
@@ -768,6 +801,8 @@ iterRunes:
 				p.stateDate = dateYearWsMonthWs
 			}
 		case dateYearWsMonthWs:
+			fmt.Println("dateYearWsMonthWs")
+
 			// 2013 Jan 06 15:04:05
 			switch r {
 			case ',':
@@ -793,6 +828,8 @@ iterRunes:
 				break
 			}
 		case dateDigitDot:
+			fmt.Println("dateDigitDot")
+
 			// This is the 2nd period
 			// 3.31.2014
 			// 08.21.71
@@ -815,8 +852,12 @@ iterRunes:
 				}
 			}
 		case dateDigitDotDot:
+			fmt.Println("dateDigitDotDot")
+
 			// iterate all the way through
 		case dateAlpha:
+			fmt.Println("dateAlpha")
+
 			// dateAlphaWS
 			//  Mon Jan _2 15:04:05 2006
 			//  Mon Jan _2 15:04:05 MST 2006
@@ -917,6 +958,8 @@ iterRunes:
 			}
 
 		case dateAlphaWs:
+			fmt.Println("dateAlphaWs")
+
 			// dateAlphaWsAlpha
 			//   Mon Jan _2 15:04:05 2006
 			//   Mon Jan _2 15:04:05 MST 2006
@@ -943,6 +986,8 @@ iterRunes:
 			}
 
 		case dateAlphaWsDigit:
+			fmt.Println("dateAlphaWsDigit")
+
 			// May 8, 2009 5:57:51 PM
 			// May 8 2009 5:57:51 PM
 			// oct 1, 1970
@@ -966,6 +1011,8 @@ iterRunes:
 				i--
 			}
 		case dateAlphaWsDigitYearmaybe:
+			fmt.Println("dateAlphaWsDigitYearmaybe")
+
 			//       x
 			// May 8 2009 5:57:51 PM
 			// May 8 17:57:51 2009
@@ -985,6 +1032,8 @@ iterRunes:
 				break iterRunes
 			}
 		case dateAlphaWsDigitMore:
+			fmt.Println("dateAlphaWsDigitMore")
+
 			//       x
 			// May 8, 2009 5:57:51 PM
 			// May 05, 2005, 05:05:05
@@ -996,6 +1045,8 @@ iterRunes:
 				p.stateDate = dateAlphaWsDigitMoreWs
 			}
 		case dateAlphaWsDigitMoreWs:
+			fmt.Println("dateAlphaWsDigitMoreWs")
+
 			//            x
 			// May 8, 2009 5:57:51 PM
 			// May 05, 2005, 05:05:05
@@ -1017,6 +1068,8 @@ iterRunes:
 			}
 
 		case dateAlphaWsMonth:
+			fmt.Println("dateAlphaWsMonth")
+
 			// April 8, 2009
 			// April 8 2009
 			switch r {
@@ -1039,6 +1092,8 @@ iterRunes:
 				}
 			}
 		case dateAlphaWsMonthMore:
+			fmt.Println("dateAlphaWsMonthMore")
+
 			//                  X
 			// January 02, 2006, 15:04:05
 			// January 02 2006, 15:04:05
@@ -1058,6 +1113,8 @@ iterRunes:
 				break iterRunes
 			}
 		case dateAlphaWsMonthSuffix:
+			fmt.Println("dateAlphaWsMonthSuffix")
+
 			//        x
 			// April 8th, 2009
 			// April 8th 2009
@@ -1088,6 +1145,8 @@ iterRunes:
 				}
 			}
 		case dateAlphaWsMore:
+			fmt.Println("dateAlphaWsMore")
+
 			// January 02, 2006, 15:04:05
 			// January 02 2006, 15:04:05
 			// January 2nd, 2006, 15:04:05
@@ -1126,6 +1185,8 @@ iterRunes:
 			}
 
 		case dateAlphaPeriodWsDigit:
+			fmt.Println("dateAlphaPeriodWsDigit")
+
 			//    oct. 7, '70
 			switch {
 			case r == ' ':
@@ -1137,6 +1198,8 @@ iterRunes:
 				return p, unknownErr(datestr)
 			}
 		case dateWeekdayComma:
+			fmt.Println("dateWeekdayComma")
+
 			// Monday, 02 Jan 2006 15:04:05 MST
 			// Monday, 02 Jan 2006 15:04:05 -0700
 			// Monday, 02 Jan 2006 15:04:05 +0100
@@ -1160,6 +1223,8 @@ iterRunes:
 				}
 			}
 		case dateWeekdayAbbrevComma:
+			fmt.Println("dateWeekdayAbbrevComma")
+
 			// Mon, 02 Jan 2006 15:04:05 MST
 			// Mon, 02 Jan 2006 15:04:05 -0700
 			// Thu, 13 Jul 2017 08:58:40 +0100
@@ -1192,6 +1257,8 @@ iterRunes:
 	}
 	p.coalesceDate(i)
 	if p.stateTime == timeStart {
+		fmt.Println("timeStart")
+
 		// increment first one, since the i++ occurs at end of loop
 		if i < len(p.datestr) {
 			i++
@@ -1212,6 +1279,8 @@ iterRunes:
 
 			switch p.stateTime {
 			case timeStart:
+				fmt.Println("timeStart")
+
 				// 22:43:22
 				// 22:43
 				// timeComma
@@ -1339,6 +1408,8 @@ iterRunes:
 					}
 				}
 			case timeOffset:
+				fmt.Println("timeOffset")
+
 				// 19:55:00+0100
 				// timeOffsetColon
 				//   15:04:05+07:00
@@ -1347,6 +1418,8 @@ iterRunes:
 					p.stateTime = timeOffsetColon
 				}
 			case timeWs:
+				fmt.Println("timeWs")
+
 				// timeWsAlpha
 				//   06:20:00 UTC
 				//   06:20:00 UTC-05
@@ -1390,6 +1463,8 @@ iterRunes:
 					}
 				}
 			case timeWsAlpha:
+				fmt.Println("timeWsAlpha")
+
 				// 06:20:00 UTC
 				// 06:20:00 UTC-05
 				// timeWsAlphaWs
@@ -1423,9 +1498,13 @@ iterRunes:
 					p.yeari = i + 1
 				}
 			case timeWsAlphaWs:
+				fmt.Println("timeWsAlphaWs")
+
 				//   17:57:51 MST 2009
 
 			case timeWsAlphaZoneOffset:
+				fmt.Println("timeWsAlphaZoneOffset")
+
 				// 06:20:00 UTC-05
 				// timeWsAlphaZoneOffset
 				// timeWsAlphaZoneOffsetWs
@@ -1442,6 +1521,8 @@ iterRunes:
 					p.stateTime = timeWsAlphaZoneOffsetWs
 				}
 			case timeWsAlphaZoneOffsetWs:
+				fmt.Println("timeWsAlphaZoneOffsetWs")
+
 				// timeWsAlphaZoneOffsetWs
 				//   timeWsAlphaZoneOffsetWsExtra
 				//     18:04:07 GMT+0100 (GMT Daylight Time)
@@ -1454,6 +1535,8 @@ iterRunes:
 					p.stateTime = timeWsAlphaZoneOffsetWsExtra
 				}
 			case timeWsAlphaZoneOffsetWsYear:
+				fmt.Println("timeWsAlphaZoneOffsetWsYear")
+
 				// 15:44:11 UTC+0100 2015
 				if unicode.IsDigit(r) {
 					p.yearlen = i - p.yeari + 1
@@ -1462,6 +1545,8 @@ iterRunes:
 					}
 				}
 			case timeWsAMPMMaybe:
+				fmt.Println("timeWsAMPMMaybe")
+
 				// timeWsAMPMMaybe
 				//   timeWsAMPM
 				//     05:24:37 PM
@@ -1487,6 +1572,8 @@ iterRunes:
 					p.stateTime = timeWs
 				}
 			case timeWsOffset:
+				fmt.Println("timeWsOffset")
+
 				// timeWsOffset
 				//   15:04:05 -0700
 				//   timeWsOffsetWsOffset
@@ -1507,6 +1594,8 @@ iterRunes:
 					p.stateTime = timeWsOffsetWs
 				}
 			case timeWsOffsetWs:
+				fmt.Println("timeWsOffsetWs")
+
 				// 17:57:51 -0700 2009
 				// 00:12:00 +0000 UTC
 				// 22:18:00.001 +0000 UTC m=+0.000000001
@@ -1545,6 +1634,8 @@ iterRunes:
 				}
 
 			case timeWsOffsetColon:
+				fmt.Println("timeWsOffsetColon")
+
 				// timeWsOffsetColon
 				//   15:04:05 -07:00
 				//   timeWsOffsetColonAlpha
@@ -1555,6 +1646,8 @@ iterRunes:
 					break iterTimeRunes
 				}
 			case timePeriod:
+				fmt.Println("timePeriod")
+
 				// 15:04:05.999999999+07:00
 				// 15:04:05.999999999-07:00
 				// 15:04:05.999999+07:00
@@ -1599,6 +1692,8 @@ iterRunes:
 					}
 				}
 			case timePeriodOffset:
+				fmt.Println("timePeriodOffset")
+
 				// timePeriodOffset
 				//   19:55:00.799+0100
 				//   timePeriodOffsetColon
@@ -1608,6 +1703,8 @@ iterRunes:
 					p.stateTime = timePeriodOffsetColon
 				}
 			case timePeriodOffsetColon:
+				fmt.Println("timePeriodOffsetColon")
+
 				// timePeriodOffset
 				//   timePeriodOffsetColon
 				//     15:04:05.999-07:00
@@ -1619,8 +1716,12 @@ iterRunes:
 					p.tzi = i + 1
 				}
 			case timePeriodOffsetColonWs:
+				fmt.Println("timePeriodOffsetColonWs")
+
 				// continue
 			case timePeriodWs:
+				fmt.Println("timePeriodWs")
+
 				// timePeriodWs
 				//   timePeriodWsOffset
 				//     00:07:31.945167 +0000
@@ -1649,6 +1750,8 @@ iterRunes:
 				}
 
 			case timePeriodWsOffset:
+				fmt.Println("timePeriodWsOffset")
+
 				// timePeriodWs
 				//   timePeriodWsOffset
 				//     00:07:31.945167 +0000
@@ -1685,6 +1788,8 @@ iterRunes:
 					}
 				}
 			case timePeriodWsOffsetWsAlpha:
+				fmt.Println("timePeriodWsOffsetWsAlpha")
+
 				// 03:02:00.001 +0300 MSK m=+0.000000001
 				// eff you golang
 				if r == '=' && datestr[i-1] == 'm' {
@@ -1694,6 +1799,8 @@ iterRunes:
 				}
 
 			case timePeriodWsOffsetColon:
+				fmt.Println("timePeriodWsOffsetColon")
+
 				// 13:31:51.999 -07:00 MST
 				switch r {
 				case ' ':
@@ -1706,8 +1813,12 @@ iterRunes:
 					}
 				}
 			case timePeriodWsOffsetColonAlpha:
+				fmt.Println("timePeriodWsOffsetColonAlpha")
+
 				// continue
 			case timeZ:
+				fmt.Println("timeZ")
+
 				// timeZ
 				//   15:04:05.99Z
 				// With a time-zone at end after Z
@@ -1724,6 +1835,8 @@ iterRunes:
 
 		switch p.stateTime {
 		case timeWsAlpha:
+			fmt.Println("timeWsAlpha")
+
 			switch len(p.datestr) - p.tzi {
 			case 3:
 				// 13:31:51.999 +01:00 CET
@@ -1735,14 +1848,22 @@ iterRunes:
 			}
 
 		case timeWsAlphaWs:
+			fmt.Println("timeWsAlphaWs")
+
 			p.yearlen = i - p.yeari
 			p.setYear()
 		case timeWsYear:
+			fmt.Println("timeWsYear")
+
 			p.yearlen = i - p.yeari
 			p.setYear()
 		case timeWsAlphaZoneOffsetWsExtra:
+			fmt.Println("timeWsAlphaZoneOffsetWsExtra")
+
 			p.trimExtra()
 		case timeWsAlphaZoneOffset:
+			fmt.Println("timeWsAlphaZoneOffset")
+
 			// 06:20:00 UTC-05
 			if i-p.offseti < 4 {
 				p.set(p.offseti, "-07")
@@ -1751,8 +1872,11 @@ iterRunes:
 			}
 
 		case timePeriod:
+			fmt.Println("timePeriod")
+
 			p.mslen = i - p.msi
 		case timeOffset:
+			fmt.Println("timeOffset")
 
 			switch len(p.datestr) - p.offseti {
 			case 0, 1, 2, 4:
@@ -1766,8 +1890,12 @@ iterRunes:
 			}
 
 		case timeWsOffset:
+			fmt.Println("timeWsOffset")
+
 			p.set(p.offseti, "-0700")
 		case timeWsOffsetWs:
+			fmt.Println("timeWsOffsetWs")
+
 			// 17:57:51 -0700 2009
 			// 00:12:00 +0000 UTC
 			if p.tzi > 0 {
@@ -1782,17 +1910,27 @@ iterRunes:
 
 			}
 		case timeWsOffsetColon:
+			fmt.Println("timeWsOffsetColon")
+
 			// 17:57:51 -07:00
 			p.set(p.offseti, "-07:00")
 		case timeOffsetColon:
+			fmt.Println("timeOffsetColon")
+
 			// 15:04:05+07:00
 			p.set(p.offseti, "-07:00")
 		case timePeriodOffset:
+			fmt.Println("timePeriodOffset")
+
 			// 19:55:00.799+0100
 			p.set(p.offseti, "-0700")
 		case timePeriodOffsetColon:
+			fmt.Println("timePeriodOffsetColon")
+
 			p.set(p.offseti, "-07:00")
 		case timePeriodWsOffsetColonAlpha:
+			fmt.Println("timePeriodOffsetColonAlpha")
+
 			p.tzlen = i - p.tzi
 			switch p.tzlen {
 			case 3:
@@ -1801,6 +1939,8 @@ iterRunes:
 				p.set(p.tzi, "MST ")
 			}
 		case timePeriodWsOffset:
+			fmt.Println("timePeriodWsOffset")
+
 			p.set(p.offseti, "-0700")
 		}
 		p.coalesceTime(i)
@@ -1808,6 +1948,8 @@ iterRunes:
 
 	switch p.stateDate {
 	case dateDigit:
+		fmt.Println("dateDigit")
+
 		// unixy timestamps ish
 		//  example              ct type
 		//  1499979655583057426  19 nanoseconds
@@ -1859,14 +2001,20 @@ iterRunes:
 			return p, nil
 		}
 	case dateDigitSt:
+		fmt.Println("dateDigitSt")
+
 		// 171113 14:14:20
 		return p, nil
 
 	case dateYearDash:
+		fmt.Println("dateYearDash")
+
 		// 2006-01
 		return p, nil
 
 	case dateYearDashDash:
+		fmt.Println("dateYearDashDash")
+
 		// 2006-01-02
 		// 2006-1-02
 		// 2006-1-2
@@ -1874,6 +2022,8 @@ iterRunes:
 		return p, nil
 
 	case dateYearDashDashOffset:
+		fmt.Println("dateYearDashDashOffset")
+
 		///  2020-07-20+00:00
 		switch len(p.datestr) - p.offseti {
 		case 5:
@@ -1884,6 +2034,8 @@ iterRunes:
 		return p, nil
 
 	case dateYearDashAlphaDash:
+		fmt.Println("dateYearDashAlphaDash")
+
 		// 2013-Feb-03
 		// 2013-Feb-3
 		p.daylen = i - p.dayi
@@ -1891,13 +2043,19 @@ iterRunes:
 		return p, nil
 
 	case dateYearDashDashWs:
+		fmt.Println("dateYearDashDashWs")
+
 		// 2013-04-01
 		return p, nil
 
 	case dateYearDashDashT:
+		fmt.Println("dateYearDashDashT")
+
 		return p, nil
 
 	case dateDigitDashAlphaDash:
+		fmt.Println("dateDigitDashAlphaDash")
+
 		// 13-Feb-03   ambiguous
 		// 28-Feb-03   ambiguous
 		// 29-Jun-2016
@@ -1925,6 +2083,8 @@ iterRunes:
 
 		return p, nil
 	case dateDigitDashDigitDash:
+		fmt.Println("dateDigitDashDigitDash")
+
 		fmt.Println("date digit dash digit")
 		// 13-02-03   ambiguous
 		// 28-02-03   ambiguous
@@ -1954,6 +2114,8 @@ iterRunes:
 		return p, nil
 
 	case dateDigitDot:
+		fmt.Println("dateDigitDot")
+
 		if len(datestr) == len("1335986983.581") { // 14
 			unixStr := strings.Split(datestr, ".")
 			if seconds, err := strconv.ParseInt(unixStr[0], 10, 64); err == nil {
@@ -1997,6 +2159,8 @@ iterRunes:
 		}
 
 	case dateDigitDotDot:
+		fmt.Println("dateDigitDotDot")
+
 		// 03.31.1981
 		// 3.31.2014
 		// 3.2.1981
@@ -2006,6 +2170,8 @@ iterRunes:
 		return p, nil
 
 	case dateDigitWsMoYear:
+		fmt.Println("dateDigitWsMoYear")
+
 		// 2 Jan 2018
 		// 2 Jan 18
 		// 2 Jan 2018 23:59
@@ -2014,6 +2180,8 @@ iterRunes:
 		return p, nil
 
 	case dateDigitWsMolong:
+		fmt.Println("dateDigitWsMoLong")
+
 		// 18 January 2018
 		// 8 January 2018
 		if p.daylen == 2 {
@@ -2024,48 +2192,70 @@ iterRunes:
 		return p, nil // parse("2 January 2006", datestr, loc)
 
 	case dateAlphaWsMonth:
+		fmt.Println("dateAlphaWsMonth")
+
 		p.yearlen = i - p.yeari
 		p.setYear()
 		return p, nil
 
 	case dateAlphaWsMonthMore:
+		fmt.Println("dateAlphaWsMonthMore")
+
 		return p, nil
 
 	case dateAlphaWsDigitMoreWs:
+		fmt.Println("dateAlphaWsMonthMoreWs")
+
 		// oct 1, 1970
 		p.yearlen = i - p.yeari
 		p.setYear()
 		return p, nil
 
 	case dateAlphaWsDigitMoreWsYear:
+		fmt.Println("dateAlphaWsDigitMoreWsYear")
+
 		// May 8, 2009 5:57:51 PM
 		// Jun 7, 2005, 05:57:51
 		return p, nil
 
 	case dateAlphaWsAlpha:
+		fmt.Println("dateAlphaWsAlpha")
+
 		return p, nil
 
 	case dateAlphaWsDigit:
+		fmt.Println("dateAlphaWsDigit")
+
 		return p, nil
 
 	case dateAlphaWsDigitYearmaybe:
+		fmt.Println("dateAlphaWsDigitYearMaybe")
+
 		return p, nil
 
 	case dateDigitSlash:
+		fmt.Println("dateDigitSlash")
+
 		// 3/1/2014
 		// 10/13/2014
 		// 01/02/2006
 		return p, nil
 
 	case dateDigitSlashAlpha:
+		fmt.Println("dateDigitSlashAlpha")
+
 		// 03/Jun/2014
 		return p, nil
 
 	case dateDigitYearSlash:
+		fmt.Println("dateDigitYearSlash")
+
 		// 2014/10/13
 		return p, nil
 
 	case dateDigitColon:
+		fmt.Println("dateDigitColon")
+
 		// 3:1:2014
 		// 10:13:2014
 		// 01:02:2006
@@ -2073,27 +2263,37 @@ iterRunes:
 		return p, nil
 
 	case dateDigitChineseYear:
+		fmt.Println("dateDigitChineseYear")
+
 		// dateDigitChineseYear
 		//   2014年04月08日
 		p.format = []byte("2006年01月02日")
 		return p, nil
 
 	case dateDigitChineseYearWs:
+		fmt.Println("dateDigitChineseYearWs")
+
 		p.format = []byte("2006年01月02日 15:04:05")
 		return p, nil
 
 	case dateWeekdayComma:
+		fmt.Println("dateWeekdayComma")
+
 		// Monday, 02 Jan 2006 15:04:05 -0700
 		// Monday, 02 Jan 2006 15:04:05 +0100
 		// Monday, 02-Jan-06 15:04:05 MST
 		return p, nil
 
 	case dateWeekdayAbbrevComma:
+		fmt.Println("dateWeekdayAbbrevComma")
+
 		// Mon, 02-Jan-06 15:04:05 MST
 		// Mon, 02 Jan 2006 15:04:05 MST
 		return p, nil
 
 	case dateYearWsMonthWs:
+		fmt.Println("dateYearWsMonthWs")
+
 		return p, nil
 	}
 
