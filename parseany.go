@@ -157,6 +157,8 @@ func ParseAny(datestr string, opts ...ParserOption) (time.Time, error) {
 	fmt.Println("p.format:", string(p.format))
 	fmt.Println("p.time:", p.t)
 	fmt.Println("p.datestr:", p.datestr)
+	fmt.Println("p.stateDate:", p.stateDate)
+	fmt.Println("p.stateTime:", p.stateTime)
 
 	return p.parse()
 }
@@ -2514,6 +2516,9 @@ func (p *parser) parse() (time.Time, error) {
 		p.format = p.format[p.skip:]
 		p.datestr = p.datestr[p.skip:]
 	}
+
+	fmt.Println("parser.parse p.format:", string(p.format))
+	fmt.Println("parser.parse p.datestr:", p.datestr)
 
 	if p.loc == nil {
 		// gou.Debugf("parse layout=%q input=%q   \ntx, err := time.Parse(%q, %q)", string(p.format), p.datestr, string(p.format), p.datestr)
