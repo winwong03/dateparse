@@ -153,6 +153,11 @@ func ParseAny(datestr string, opts ...ParserOption) (time.Time, error) {
 		return time.Time{}, err
 	}
 	fmt.Println("format of dateparse time:", p)
+	fmt.Println("p.tzi:", p.tzi)
+	fmt.Println("p.format:", p.format)
+	fmt.Println("p.time:", p.t)
+	fmt.Println("p.datestr:", p.datestr)
+
 	return p.parse()
 }
 
