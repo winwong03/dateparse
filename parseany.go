@@ -154,7 +154,7 @@ func ParseAny(datestr string, opts ...ParserOption) (time.Time, error) {
 	}
 	fmt.Println("format of dateparse time:", p)
 	fmt.Println("p.tzi:", p.tzi)
-	fmt.Println("p.format:", p.format)
+	fmt.Println("p.format:", string(p.format))
 	fmt.Println("p.time:", p.t)
 	fmt.Println("p.datestr:", p.datestr)
 
