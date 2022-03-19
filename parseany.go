@@ -2524,6 +2524,8 @@ func (p *parser) parse() (time.Time, error) {
 		// gou.Debugf("parse layout=%q input=%q   \ntx, err := time.Parse(%q, %q)", string(p.format), p.datestr, string(p.format), p.datestr)
 		t, err := time.Parse(string(p.format), p.datestr)
 		fmt.Printf("parsed format is:`%s`\n", t)
+		name, offset := t.Local().Zone()
+		fmt.Println("name of Local zone:", name, "with offset:", offset)
 		return t, err
 	}
 	//gou.Debugf("parse layout=%q input=%q   \ntx, err := time.ParseInLocation(%q, %q, %v)", string(p.format), p.datestr, string(p.format), p.datestr, p.loc)
