@@ -275,7 +275,6 @@ iterRunes:
 			i += (bytesConsumed - 1)
 		}
 
-		fmt.Println("stateDate:", p.stateDate)
 		// gou.Debugf("i=%d r=%s state=%d   %s", i, string(r), p.stateDate, datestr)
 		switch p.stateDate {
 		case dateStart:
@@ -1922,7 +1921,6 @@ iterRunes:
 
 		return p, nil
 	case dateDigitDashDigitDash:
-		fmt.Println("date digit dash digit")
 		// 13-02-03   ambiguous
 		// 28-02-03   ambiguous
 		// 29-06-2016

@@ -530,7 +530,6 @@ var testParseErrors = []dateTest{
 func TestParseErrors(t *testing.T) {
 	for _, th := range testParseErrors {
 		v, err := ParseAny(th.in)
-		fmt.Println("err:", err)
 		assert.NotEqual(t, nil, err, "%v for %v", v, th.in)
 
 		v, err = ParseAny(th.in, RetryAmbiguousDateWithSwap(true))
